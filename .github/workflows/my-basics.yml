@@ -36,10 +36,22 @@ jobs:
   my_deploy:
    runs-on: ubuntu-latest
    needs: my_testing
+   env:
+     VAR1: "var1"
    
    steps:
      - name: Print Hello in Deploy
        run: echo "Hello World from Deploy"
        
      - name: Check Git
-       run: git --version
+       run: |
+         git --version
+         zip --version
+
+
+     - name: Print Var1
+       run: |
+         echo "Var1: ${{ env.VAR1 }}"
+         echo "Var2: $VLOCAL_VAR2"
+       env:
+         LOCAL_VAR2: "loc_var2" 
