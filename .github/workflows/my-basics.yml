@@ -52,6 +52,6 @@ jobs:
      - name: Print Var1
        run: |
          echo "Var1: ${{ env.VAR1 }}"
-         echo "Var2: $VLOCAL_VAR2"
+         echo "Var2: $LOCAL_VAR2"
        env:
          LOCAL_VAR2: "loc_var2" 
