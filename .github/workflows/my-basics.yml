@@ -31,3 +31,9 @@ jobs:
    steps:
      - name: Print Hello in Deploy
        run: echo "Hello World from Deploy"
+       
+     - name: List current folder
+       run: |
+         pwd
+         echo "-------"
+         ls -la
