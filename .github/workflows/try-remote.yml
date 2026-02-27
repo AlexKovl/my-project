@@ -19,6 +19,8 @@ jobs:
         run: |
           echo "This is a test file" > test.txt
           echo "Deployed at $(date)" >> test.txt
+          ls -la
+          cat test.txt
 
       - name: Copy file to remote server via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -29,3 +31,19 @@ jobs:
           source: "test.txt"  # путь к файлу(ам) для отправки
           target: "/home/${{ secrets.REMOTE_USER }}/"  # целевая директория на сервере
           port: "22"
+
+      - name: Execute commands on remote server
+        uses: appleboy/ssh-action@v1.0.2
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            pwd
+            ls -la
+            cat test.txt
+            echo "Deployed completed!!!" >> test.txt
+            echo "Deployment completed!"
+            
+
+          
