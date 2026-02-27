@@ -1,0 +1,31 @@
+
+name: Deploy file to remote server
+
+on:
+  push:
+    branches: [ main ]  # ветка, при пуше в которую запускается деплой
+  workflow_dispatch:  # возможность ручного запуска
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Пример: создаём тестовый файл для отправки
+      - name: Create sample file
+        run: |
+          echo "This is a test file" > test.txt
+          echo "Deployed at $(date)" >> test.txt
+
+      - name: Copy file to remote server via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "test.txt"  # путь к файлу(ам) для отправки
+          target: "/home/${{ secrets.REMOTE_USER }}/"  # целевая директория на сервере
+          port: "22"
