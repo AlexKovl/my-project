@@ -29,7 +29,7 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "test.txt"  # путь к файлу(ам) для отправки
-          target: "/home/${{ secrets.REMOTE_USER }}/"  # целевая директория на сервере
+          target: "/home/${{ secrets.REMOTE_USER }}/tmp2/"  # целевая директория на сервере
           port: "22"
 
       - name: Execute commands on remote server
